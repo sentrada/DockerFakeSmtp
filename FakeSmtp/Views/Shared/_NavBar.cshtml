@@ -17,30 +17,23 @@
 </style>
 
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			
 			<a class="navbar-brand" href="/">FAKE SMTP @Html.Raw(Startup.IsSmtpServerOn ? "<span class='green-on'>ON</span>" : "<span class='red-off'>OFF</span>")</a>
 		</div>
 		
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
                 <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Headers" ? "active" : "")">
-					<a class="nav-link" asp-controller="Home", asp-action="Headers">Headers</a>
+					<a class="link" asp-controller="Home", asp-action="Headers">Headers</a>
                 </li>
 
                 <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Messages" ? "active" : "")">
-                    <a class="nav-link" asp-controller="Home" asp-action="Messages">Messages</a>
+                    <a class="link" asp-controller="Home" asp-action="Messages">Messages</a>
                 </li>
 				<li class="@(ViewContext.RouteData.Values["action"].ToString() == "Settings" ? "active" : "")">
-                    <a class="nav-link" asp-controller="Home" asp-action="Settings">Settings</a>
+                    <a class="link" asp-controller="Home" asp-action="Settings">Settings</a>
 				</li>
                 @*<li class="@(ViewContext.RouteData.Values["action"].ToString() == "Chat" ? "active" : "")">
                     @Html.ActionLink("Chat", "Chat", "Home")

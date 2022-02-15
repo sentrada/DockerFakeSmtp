@@ -28,12 +28,11 @@
 
 </head>
 <body>
-<header id="header" class="fixed-top ">
-    <div>
-        <partial name="_NavBar"/>
-    </div>
+<header id="header">
+    <partial name="_NavBar"/>
 </header>
-<div>
+<div id="body">
+
     @RenderBody()
 
     @*<footer class="border-top footer text-muted">
@@ -47,6 +46,7 @@
     <script type="text/javascript" src="~/lib/modernizr/dist/modernizr-2.6.2.js"></script>
 
     @RenderSection("Scripts", required: false)
+
 </div>
 </body>
 </html>
