@@ -106,4 +106,8 @@
       <_ContentIncludedByDefault Remove="wwwroot\vendor\waypoints\noframework.waypoints.js" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="wwwroot\js\main.js" />
+    </ItemGroup>
+
 </Project>
