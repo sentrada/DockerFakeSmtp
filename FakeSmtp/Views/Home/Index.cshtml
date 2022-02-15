@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Fake Smtp";
+}
+
+<div class="container">
+    <br/>
+    <br/>
+    <br/>
+    <p>The base for this project is <a href="https://github.com/cmendible/netDumbster">netDumpster</a> library and its <a href="http://www.nuget.org/packages/netDumbster">NuGet package</a>,
+        as well as the class <a href="http://mimeparser.codeplex.com/SourceControl/latest#MimeParser/MailMessageMimeParser.cs">MailMessageMimeParser</a> of <a href="http://mimeparser.codeplex.com/">mimeparser.codeplex.com</a> project.</p>
+
+    <p>When the email massage is sent to Fake Smtp server host and port, Fake Smtp server receives the message, keeps it in memory and sends it nowhere further.</p>
+
+    <p>This site is a web interface for Fake Smtp server. The site allows to see:</p>
+    <ul>
+        <li>@(Html.ActionLink("Headers of received email massages", "Headers", "Home")) as a table.</li>
+        <li>@Html.ActionLink("The list of email messages in a compact view", "Messages", "Home"), with possibility to read the email message body and download attacments.</li>
+        <li>
+            Every email message in full view including raw data which was received by Fake Smtp server.
+            <span class="text-muted">In order to view a separate email message in full view - click on a row in the headers table or on an email message title bar in the list view.</span>
+        </li>
+    </ul>
+
+    <p>@Html.ActionLink("The setting page", "Settings", "Home") allows seeing:</p>
+    <ul>
+        <li>See a name or address for a host of the Fake Smtp server</li>
+        <li>Assign a port for the Fake Smtp server to listen and receive email messages.</li>
+        <li>Start the Fake Smtp server with the giving port. <span class="text-muted">Herewith early received messages are being deleted from memory.</span></li>
+        <li>Stop the Fake Smtp server. <span class="text-muted">Herewith early received email messages stays in memory and are available for review, while new messages are ignored.</span></li>
+        <li>Clear (delete) early received email messages from memory of the Fake Smtp server.</li>
+        <li>Send test email message to the Fake Smtp сервер (with or without attachment).</li>
+    </ul>
+
+    <p>The regular email message can be sent to the Fake Smtp server using C# code, for instance. <span class="text-muted">Host and Port values can be taken from the @Html.ActionLink("settings page", "Settings", "Home")</span>:</p>
+    <pre>
+	var email = new System.Net.Mail.MailMessage("from@mail.com", "to1@mail.com, to2@mail.com", "Subject", "Message");
+
+	using (var smtpClient = new System.Net.Mail.SmtpClient {Host = "localhost", Port = @Startup.SmtpServer.Configuration.Port)
+	{
+		smtpClient.Send(email);
+	}</pre>
+</div>

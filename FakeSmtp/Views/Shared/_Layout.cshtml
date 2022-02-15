@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        span.green-on {
+            color: green;
+            padding: 0 19px 0 10px;
+            -ms-opacity: 0.5;
+            opacity: 0.5;
+        }
+
+        span.red-off {
+            color: red;
+            padding: 0 10px;
+            -ms-opacity: 0.5;
+            opacity: 0.5;
+        }
+    </style>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+
+    <title>@(string.IsNullOrEmpty(ViewBag.Title as string) ? "Fake Smtp" : ViewBag.Title.ToString())</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+
+</head>
+<body>
+<header id="header" class="fixed-top ">
+    <div>
+        <partial name="_NavBar"/>
+    </div>
+</header>
+<div>
+    @RenderBody()
+
+    @*<footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2019 - FakeSmtp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/modernizr/dist/modernizr-2.6.2.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</div>
+</body>
+</html>
