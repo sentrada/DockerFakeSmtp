@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using FakeSmtp.Models;
-using FakeSmtp.Repositories;
-using Microsoft.AspNetCore.Http;
+using FakeSmtp.TestEmailHelper;
+using FakeSmtpService;
+using FakeSmtpService.Models;
 
 namespace FakeSmtp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IFakeSmtp _fakeSmtp;
+
+        public HomeController(IFakeSmtp fakeSmtp)
+        {
+            _fakeSmtp = fakeSmtp;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -19,11 +24,12 @@ namespace FakeSmtp.Controllers
 
         public IActionResult Settings()
         {
-            ViewBag.Port = Startup.SmtpServer.Configuration.Port;
-            ViewBag.IsSmtpServerOn = Startup.IsSmtpServerOn;
-            ViewBag.MaximumLimit = Startup.MaximumLimit;
-            ViewBag.EmailCount = Startup.ReceivedEmails.Count;
-            ViewBag.ServerName = Environment.GetEnvironmentVariable("COMPUTERNAME");
+            ViewBag.Port = _fakeSmtp.GetPortNumber();
+            ViewBag.IsSmtpServerOn = _fakeSmtp.IsSmtpServerOn();
+            ViewBag.MaximumLimit = _fakeSmtp.GetMaximumLimit();
+            ViewBag.EmailCount = _fakeSmtp.GetReceivedEmails().Count;
+            ViewBag.ServerName = Dns.GetHostName();
+            ViewBag.RunInContainer = _fakeSmtp.RunInContainer(); 
 
             return View();
         }
@@ -54,25 +60,25 @@ namespace FakeSmtp.Controllers
 
         public IActionResult Start(int? port, int? limit)
         {
-            MessageRepository.Start(port, limit);
+            _fakeSmtp.StartSmtpServer();
             return RedirectToAction("Settings");
         }
 
         public IActionResult Stop()
         {
-            MessageRepository.Stop();
+            _fakeSmtp.StartSmtpServer();
             return RedirectToAction("Settings");
         }
 
         public IActionResult Clear()
         {
-            MessageRepository.Clear();
+            _fakeSmtp.ClearItems();
             return RedirectToAction("Settings");
         }
 
         public IActionResult Download(int id, int attachmentId)
         {
-            var email = MessageRepository.GetEmailById(id);
+            var email = _fakeSmtp.GetEmailById(id);
 
             var attacment = email.Attachments.First(a => a.Id == attachmentId);
 
@@ -84,25 +90,25 @@ namespace FakeSmtp.Controllers
 
         public IActionResult Message(int id)
         {
-            var model = MessageRepository.GetEmailById(id);
+            var model = _fakeSmtp.GetEmailById(id);
 
             return View(model);
         }
 
         public IActionResult TestEmail()
         {
-            MessageRepository.SendTestEmail();
+            EmailHelper.SendTestEmail();
 
-            var emailId = Startup.ReceivedEmails.Count();
+            var emailId = _fakeSmtp.GetReceivedEmails().Count();
 
             return RedirectToAction("Message", new { id = emailId });
         }
 
         public IActionResult TestEmailPlus()
         {
-            MessageRepository.SendTestEmailPlus();
+            EmailHelper.SendTestEmailPlus();
 
-            var emailId = Startup.ReceivedEmails.Count();
+            var emailId = _fakeSmtp.GetReceivedEmails().Count();
 
             return RedirectToAction("Message", new { id = emailId });
         }
@@ -111,7 +117,7 @@ namespace FakeSmtp.Controllers
         {
             for (var i = 0; i < 500; i++)
             {
-                MessageRepository.SendTestEmail();
+                EmailHelper.SendTestEmail();
             }
 
             return RedirectToAction("Messages", new { pageNumber = 1 });
@@ -124,7 +130,7 @@ namespace FakeSmtp.Controllers
             var sessionPageSize = (pageSize ?? session.GetInt32("PageSize") ?? 10);
             var currentPageNumber = (pageNumber ?? session.GetInt32("PageNumber") ?? 1);
 
-            if (sessionPageSize == 0 || Startup.ReceivedEmails.Count() < sessionPageSize * (currentPageNumber - 1))
+            if (sessionPageSize == 0 || _fakeSmtp.GetReceivedEmails().Count() < sessionPageSize * (currentPageNumber - 1))
             {
                 currentPageNumber = 1;
             }
@@ -137,11 +143,11 @@ namespace FakeSmtp.Controllers
 
             sessionPageSize = (sessionPageSize == 0) ? int.MaxValue : sessionPageSize;
 
-            ViewBag.PageAnchors = MessageRepository.GetPageAnchors(Startup.ReceivedEmails.Count(), sessionPageSize, currentPageNumber);
+            ViewBag.PageAnchors = EmailHelper.GetPageAnchors(_fakeSmtp.GetReceivedEmails().Count(), sessionPageSize, currentPageNumber);
 
-            var model = MessageRepository.GetReceivedEmails(sessionPageSize, currentPageNumber);
+            var model = _fakeSmtp.GetReceivedEmails(sessionPageSize, currentPageNumber);
 
-            ViewBag.TotalCount = Startup.ReceivedEmails.Count();
+            ViewBag.TotalCount = _fakeSmtp.GetReceivedEmails().Count();
             ViewBag.OnPageCount = model.Count;
 
             return model;

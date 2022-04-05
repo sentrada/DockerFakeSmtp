@@ -32,7 +32,7 @@
     <pre>
 	var email = new System.Net.Mail.MailMessage("from@mail.com", "to1@mail.com, to2@mail.com", "Subject", "Message");
 
-	using (var smtpClient = new System.Net.Mail.SmtpClient {Host = "localhost", Port = @Startup.SmtpServer.Configuration.Port)
+	using (var smtpClient = new System.Net.Mail.SmtpClient Host = "localhost", Port = 25)
 	{
 		smtpClient.Send(email);
 	}</pre>

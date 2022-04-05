@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="netDumbster" Version="2.0.0.8" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\vendor\aos\aos.css" />
       <_ContentIncludedByDefault Remove="wwwroot\vendor\aos\aos.js" />
       <_ContentIncludedByDefault Remove="wwwroot\vendor\bootstrap-icons\bootstrap-icons.css" />
@@ -108,6 +104,16 @@
 
     <ItemGroup>
       <Content Remove="wwwroot\js\main.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FakeSmtpService\FakeSmtpService.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Content\minimal.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

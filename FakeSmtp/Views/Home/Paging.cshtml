@@ -27,7 +27,7 @@
 		<ul class="pagination pull-right">
 			@foreach (var pageAnchor in ViewBag.PageAnchors)
 			{
-				<li class="@(ViewBag.PageNumber == pageAnchor.PageNumber ? "active" : "")"><a href="/@ViewBag.Controller?pageNumber=@pageAnchor.PageNumber">@pageAnchor.PageLabel</a></li>
+				<li class="@(ViewBag.PageNumber == pageAnchor.PageNumber ? "active" : "")"><a href="/Home/@ViewBag.Controller?pageNumber=@pageAnchor.PageNumber">@pageAnchor.PageLabel</a></li>
 			}	
 		</ul>
 	</div>

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeSmtp", "FakeSmtp\FakeSmtp.csproj", "{AFD418C7-A5C3-431A-B464-E7CCEF8B302C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeSmtpService", "FakeSmtpService\FakeSmtpService.csproj", "{45BB205A-CB19-4DEC-BA4C-F48447649157}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{AFD418C7-A5C3-431A-B464-E7CCEF8B302C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFD418C7-A5C3-431A-B464-E7CCEF8B302C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFD418C7-A5C3-431A-B464-E7CCEF8B302C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45BB205A-CB19-4DEC-BA4C-F48447649157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45BB205A-CB19-4DEC-BA4C-F48447649157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45BB205A-CB19-4DEC-BA4C-F48447649157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45BB205A-CB19-4DEC-BA4C-F48447649157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
